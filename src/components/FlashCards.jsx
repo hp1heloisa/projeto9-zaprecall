@@ -1,13 +1,10 @@
 import styled from "styled-components";
 import virar from '../assets/seta_virar.png';
-import certo from '../assets/icone_certo.png';
-import quase from '../assets/icone_quase.png'
-import erro from '../assets/icone_erro.png'
 
 
-export default function FlashCards({cards, setEstado, estado}) {
+export default function FlashCards({cards, setEstado, estado, setRespondido,respondido,listResultado,setResultado,resultado}) {
 
-    const listResultado = [erro,quase,certo];
+    // const listResultado = [erro,quase,certo];
 
     function atualizaEstado(i){
         estado[i]++;
@@ -17,35 +14,50 @@ export default function FlashCards({cards, setEstado, estado}) {
     return(
         <SCEnvolveCard>
             {cards.map((elemento,i)=>{ 
-                if (estado[i] == 0){
+                if (estado[i] == 4){
                     return (
-                        <SCFlashCard>
+                        <SCFlashCard estado={estado[i]} >
                             <span>Pergunta {i+1}</span> 
                             <ion-icon name="play-outline" onClick={()=> atualizaEstado(i)}></ion-icon>
                         </SCFlashCard>
                         )
-                } else if(estado[i] == 1) {
+                } else if(estado[i] == 5) {
                     return (
                         <SCFlashTeste>
                             <span>{elemento.question}</span>
                             <img src={virar} alt="seta_virar" onClick={()=> atualizaEstado(i)}/>
                         </SCFlashTeste>
                     )
-                } else if (estado[i] == 2){
+                } else if (estado[i] == 6){
                     return (
                     <SCFlashTeste>
                         <span>{elemento.answer}</span>
                         <SCResultado>
-                            <div onClick={()=> atualizaEstado(i)}>Não lembrei</div>
-                            <div onClick={()=> atualizaEstado(i)}>Quase não lembrei</div>
-                            <div onClick={()=> atualizaEstado(i)}>Zap!</div>
+                            <div onClick={()=> {
+                                 estado[i] = 0;
+                                 setEstado([...estado]);
+                                 setRespondido(respondido+1);
+                                 setResultado([...resultado,estado[i]]);
+                            }}>Não lembrei</div>
+                            <div onClick={()=> {
+                                 estado[i] = 1;
+                                 setEstado([...estado]);
+                                 setRespondido(respondido+1);
+                                 setResultado([...resultado,estado[i]]);
+                            }}>Quase não lembrei</div>
+                            <div onClick={()=> {
+                                 estado[i] = 2;
+                                 setEstado([...estado]);
+                                 setRespondido(respondido+1);
+                                 setResultado([...resultado,estado[i]]);
+                            }}>Zap!</div>
                         </SCResultado>
                     </SCFlashTeste>)
                 } else{
                     return(
-                        <SCFlashCard>
+                        <SCFlashCard estado={estado[i]} > 
                             <span>Pergunta {i+1}</span> 
-                            <ion-icon name="play-outline" onClick={()=> atualizaEstado(i)}></ion-icon>
+                            <img src={listResultado[estado[i]]} alt={listResultado[estado[i]]} />
                         </SCFlashCard>
                     )
                 }
@@ -63,7 +75,6 @@ const SCEnvolveCard = styled.div`
     width: 100%;
 `;
 
-
 const SCFlashCard = styled.div`
     box-sizing: border-box;
     width: 300px;
@@ -74,7 +85,18 @@ const SCFlashCard = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #333333;
+    color:  ${ (props) => {
+        if (props.estado == 0){
+            return '#FF3030';
+        } else if (props.estado == 1){
+            return '#FF922E';
+        } else if (props.estado==2){
+            return '#2FBE34';
+        }
+        else {
+            return '#333333'
+        }
+    }};
     padding-left: 15px;
     padding-right: 15px;
     span{
@@ -82,12 +104,15 @@ const SCFlashCard = styled.div`
         font-size: 16px;
         line-height: 19px;
         font-weight: 700;
+        text-decoration: ${ (props) => (props.estado <=2) ? 'line-through' : 'none'};
     }
     ion-icon{
         width: 20px;
         height: 23px;
     }
 `;
+
+
 
 const SCFlashTeste = styled.div`
     width: 300px;

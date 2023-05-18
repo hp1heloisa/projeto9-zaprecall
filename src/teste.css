@@ -1,4 +1,7 @@
 body{
     height: 100%;
     box-sizing: border-box;
+    flex-direction: ;
 }
+
+p :nth-child(1)
