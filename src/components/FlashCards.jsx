@@ -16,48 +16,48 @@ export default function FlashCards({cards, setEstado, estado, setRespondido,resp
             {cards.map((elemento,i)=>{ 
                 if (estado[i] == 4){
                     return (
-                        <SCFlashCard estado={estado[i]} >
-                            <span>Pergunta {i+1}</span> 
-                            <ion-icon name="play-outline" onClick={()=> atualizaEstado(i)}></ion-icon>
+                        <SCFlashCard estado={estado[i]} data-test="flashcard">
+                            <span data-test="flashcard-text">Pergunta {i+1}</span> 
+                            <ion-icon name="play-outline" onClick={()=> atualizaEstado(i)} data-test="play-btn"></ion-icon>
                         </SCFlashCard>
                         )
                 } else if(estado[i] == 5) {
                     return (
-                        <SCFlashTeste>
-                            <span>{elemento.question}</span>
-                            <img src={virar} alt="seta_virar" onClick={()=> atualizaEstado(i)}/>
+                        <SCFlashTeste data-test="flashcard">
+                            <span data-test="flashcard-text">{elemento.question}</span>
+                            <img src={virar} alt="seta_virar" onClick={()=> atualizaEstado(i)} data-test="turn-btn"/>
                         </SCFlashTeste>
                     )
                 } else if (estado[i] == 6){
                     return (
-                    <SCFlashTeste>
-                        <span>{elemento.answer}</span>
+                    <SCFlashTeste data-test="flashcard">
+                        <span data-test="flashcard-text">{elemento.answer}</span>
                         <SCResultado>
                             <div onClick={()=> {
                                  estado[i] = 0;
                                  setEstado([...estado]);
                                  setRespondido(respondido+1);
                                  setResultado([...resultado,estado[i]]);
-                            }}>Não lembrei</div>
+                            }} data-test="no-btn">Não lembrei</div>
                             <div onClick={()=> {
                                  estado[i] = 1;
                                  setEstado([...estado]);
                                  setRespondido(respondido+1);
                                  setResultado([...resultado,estado[i]]);
-                            }}>Quase não lembrei</div>
+                            }} data-test="partial-btn">Quase não lembrei</div>
                             <div onClick={()=> {
                                  estado[i] = 2;
                                  setEstado([...estado]);
                                  setRespondido(respondido+1);
                                  setResultado([...resultado,estado[i]]);
-                            }}>Zap!</div>
+                            }} data-test="zap-btn">Zap!</div>
                         </SCResultado>
                     </SCFlashTeste>)
                 } else{
                     return(
-                        <SCFlashCard estado={estado[i]} > 
-                            <span>Pergunta {i+1}</span> 
-                            <img src={listResultado[estado[i]]} alt={listResultado[estado[i]]} />
+                        <SCFlashCard estado={estado[i]} data-test="flashcard"> 
+                            <span data-test="flashcard-text">Pergunta {i+1}</span> 
+                            <img src={listResultado[estado[i]]} alt={listResultado[estado[i]]} data-test="no-icon zap-icon partial-icon"/>
                         </SCFlashCard>
                     )
                 }

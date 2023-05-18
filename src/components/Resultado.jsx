@@ -9,12 +9,12 @@ export default function Resultado({cards, respondido,resultado,listResultado}) {
         if (respondido==cards.length){
             console.log(resultado)
             if (resultado.includes(0)==false){
-                return <div> 
+                return <div data-test="finish-text"> 
                             <span><img src={boa} alt={boa} /> Parabéns!</span>
                             <span>Você não esqueceu de nenhum flashcard!</span>
                         </div>
             } else {
-                return <div> 
+                return <div data-test="finish-text"> 
                             <span><img src={ruim} alt={ruim} /> Putz...</span>
                             <span>Você não esqueceu de nenhum flashcard!</span>
                         </div>
@@ -23,11 +23,11 @@ export default function Resultado({cards, respondido,resultado,listResultado}) {
     }
 
     return(
-        <CSResultado respondido={respondido} cards={cards.length}>
+        <CSResultado respondido={respondido} cards={cards.length} data-test="footer">
             <div>{formaFrase()}</div>
             <div>
                 <span>{respondido}/{cards.length} CONCLUÍDOS</span>
-                <div>{resultado.map((i)=> <img src={listResultado[i]} alt={listResultado[i]}/>)}</div>
+                <div>{resultado.map((i)=> <img src={listResultado[i]} alt={listResultado[i]} data-test="no-icon zap-icon partial-icon"/>)}</div>
             </div>
         </CSResultado>
     )
