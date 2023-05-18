@@ -18,11 +18,13 @@ export default function App() {
   ]);
   let [acertos, setAcertos] = useState(0);
   const [estado, setEstado] = useState([0,0,0,0,0,0,0,0]);
+  let [resultado, setResultado] = useState(-1);
 
   return (
     <Geral>
       <Topo />
-      <FlashCards cards = {cards} acertos = {acertos} setAcertos = {setAcertos} estado={estado} setEstado={setEstado} />
+      <FlashCards cards = {cards} acertos = {acertos} resultado={resultado} setResultado={setResultado}
+      setAcertos = {setAcertos} estado={estado} setEstado={setEstado} />
       <Resultado cards = {cards} acertos = {acertos} />
     </Geral>
   )
