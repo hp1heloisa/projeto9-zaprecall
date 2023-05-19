@@ -3,7 +3,7 @@ import boa from "../assets/party.png";
 import ruim from "../assets/sad.png";
 
 
-export default function Resultado({cards, respondido,resultado,listResultado}) {
+export default function Resultado({cards, respondido,resultado,listResultado,tela}) {
 
     function formaFrase(){
         if (respondido==cards.length){
@@ -21,16 +21,17 @@ export default function Resultado({cards, respondido,resultado,listResultado}) {
             }
         }
     }
-
-    return(
-        <CSResultado respondido={respondido} cards={cards.length} data-test="footer">
-            <div>{formaFrase()}</div>
-            <div>
-                <span>{respondido}/{cards.length} CONCLUÍDOS</span>
-                <div>{resultado.map((i)=> <img src={listResultado[i]} alt={listResultado[i]} data-test="no-icon zap-icon partial-icon"/>)}</div>
-            </div>
-        </CSResultado>
-    )
+    if (tela){
+        return(
+            <CSResultado respondido={respondido} cards={cards.length} data-test="footer">
+                <div>{formaFrase()}</div>
+                <div>
+                    <span>{respondido}/{cards.length} CONCLUÍDOS</span>
+                    <div>{resultado.map((i)=> <img src={listResultado[i]} alt={listResultado[i]} data-test="no-icon zap-icon partial-icon"/>)}</div>
+                </div>
+            </CSResultado>
+        )
+    }
 }
 
 const CSResultado = styled.div`

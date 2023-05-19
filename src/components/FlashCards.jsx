@@ -2,69 +2,68 @@ import styled from "styled-components";
 import virar from '../assets/seta_virar.png';
 
 
-export default function FlashCards({cards, setEstado, estado, setRespondido,respondido,listResultado,setResultado,resultado}) {
-
-    // const listResultado = [erro,quase,certo];
+export default function FlashCards({cards, setEstado, estado, setRespondido,respondido,listResultado,setResultado,resultado,tela}) {
 
     function atualizaEstado(i){
         estado[i]++;
         setEstado([...estado]);
     }
-
-    return(
-        <SCEnvolveCard>
-            {cards.map((elemento,i)=>{ 
-                if (estado[i] == 4){
-                    return (
-                        <SCFlashCard estado={estado[i]} data-test="flashcard">
-                            <span data-test="flashcard-text">Pergunta {i+1}</span> 
-                            <ion-icon name="play-outline" onClick={()=> atualizaEstado(i)} data-test="play-btn"></ion-icon>
-                        </SCFlashCard>
+    if (tela){
+        return(
+            <SCEnvolveCard>
+                {cards.map((elemento,i)=>{ 
+                    if (estado[i] == 4){
+                        return (
+                            <SCFlashCard estado={estado[i]} data-test="flashcard">
+                                <span data-test="flashcard-text">Pergunta {i+1}</span> 
+                                <ion-icon name="play-outline" onClick={()=> atualizaEstado(i)} data-test="play-btn"></ion-icon>
+                            </SCFlashCard>
+                            )
+                    } else if(estado[i] == 5) {
+                        return (
+                            <SCFlashCard data-test="flashcard" estado={estado[i]}>
+                                <span data-test="flashcard-text">{elemento.question}</span>
+                                <img src={virar} alt="seta_virar" onClick={()=> atualizaEstado(i)} data-test="turn-btn"/>
+                            </SCFlashCard>
                         )
-                } else if(estado[i] == 5) {
-                    return (
-                        <SCFlashTeste data-test="flashcard">
-                            <span data-test="flashcard-text">{elemento.question}</span>
-                            <img src={virar} alt="seta_virar" onClick={()=> atualizaEstado(i)} data-test="turn-btn"/>
-                        </SCFlashTeste>
-                    )
-                } else if (estado[i] == 6){
-                    return (
-                    <SCFlashTeste data-test="flashcard">
-                        <span data-test="flashcard-text">{elemento.answer}</span>
-                        <SCResultado>
-                            <div onClick={()=> {
-                                 estado[i] = 0;
-                                 setEstado([...estado]);
-                                 setRespondido(respondido+1);
-                                 setResultado([...resultado,estado[i]]);
-                            }} data-test="no-btn">Não lembrei</div>
-                            <div onClick={()=> {
-                                 estado[i] = 1;
-                                 setEstado([...estado]);
-                                 setRespondido(respondido+1);
-                                 setResultado([...resultado,estado[i]]);
-                            }} data-test="partial-btn">Quase não lembrei</div>
-                            <div onClick={()=> {
-                                 estado[i] = 2;
-                                 setEstado([...estado]);
-                                 setRespondido(respondido+1);
-                                 setResultado([...resultado,estado[i]]);
-                            }} data-test="zap-btn">Zap!</div>
-                        </SCResultado>
-                    </SCFlashTeste>)
-                } else{
-                    return(
-                        <SCFlashCard estado={estado[i]} data-test="flashcard"> 
-                            <span data-test="flashcard-text">Pergunta {i+1}</span> 
-                            <img src={listResultado[estado[i]]} alt={listResultado[estado[i]]} data-test="no-icon zap-icon partial-icon"/>
-                        </SCFlashCard>
-                    )
-                }
-        
-            })}
-        </SCEnvolveCard>
-    )
+                    } else if (estado[i] == 6){
+                        return (
+                        <SCFlashCard data-test="flashcard" estado={estado[i]}>
+                            <span data-test="flashcard-text">{elemento.answer}</span>
+                            <SCResultado>
+                                <div onClick={()=> {
+                                     estado[i] = 0;
+                                     setEstado([...estado]);
+                                     setRespondido(respondido+1);
+                                     setResultado([...resultado,estado[i]]);
+                                }} data-test="no-btn">Não lembrei</div>
+                                <div onClick={()=> {
+                                     estado[i] = 1;
+                                     setEstado([...estado]);
+                                     setRespondido(respondido+1);
+                                     setResultado([...resultado,estado[i]]);
+                                }} data-test="partial-btn">Quase não lembrei</div>
+                                <div onClick={()=> {
+                                     estado[i] = 2;
+                                     setEstado([...estado]);
+                                     setRespondido(respondido+1);
+                                     setResultado([...resultado,estado[i]]);
+                                }} data-test="zap-btn">Zap!</div>
+                            </SCResultado>
+                        </SCFlashCard>)
+                    } else{
+                        return(
+                            <SCFlashCard estado={estado[i]} data-test="flashcard"> 
+                                <span data-test="flashcard-text">Pergunta {i+1}</span> 
+                                <img src={listResultado[estado[i]]} alt={listResultado[estado[i]]} data-test="no-icon zap-icon partial-icon"/>
+                            </SCFlashCard>
+                        )
+                    }
+            
+                })}
+            </SCEnvolveCard>
+        )
+    }
 }
 
 const SCEnvolveCard = styled.div`
@@ -78,13 +77,14 @@ const SCEnvolveCard = styled.div`
 const SCFlashCard = styled.div`
     box-sizing: border-box;
     width: 300px;
-    height: 65px;   
-    background: #FFFFFF;
+    height: ${(props) => (props.estado==5 || props.estado==6) ? '150px' : '65px'};   
+    background: ${(props) => (props.estado==5 || props.estado==6) ? '#FFFFD5' : '#FFFFFF'};
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    flex-direction: ${(props) => (props.estado==5 || props.estado==6) ? 'column' : 'row'};
+    align-items:  ${(props) => (props.estado==5 || props.estado==6) ? '' : 'center'};
     color:  ${ (props) => {
         if (props.estado == 0){
             return '#FF3030';
@@ -97,48 +97,28 @@ const SCFlashCard = styled.div`
             return '#333333'
         }
     }};
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-right: ${(props) => (props.estado==5 || props.estado==6) ? '' : '15px'};
+    padding-top: ${(props) => (props.estado==5 || props.estado==6) ? '18px' : ''};
     span{
         font-family: 'Recursive';
-        font-size: 16px;
-        line-height: 19px;
-        font-weight: 700;
+        font-size: ${(props) => (props.estado==5 || props.estado==6) ? '18px' : '16px'};
+        line-height: ${(props) => (props.estado==5 || props.estado==6) ? '22px' : '19px'};
+        font-weight: ${(props) => (props.estado==5 || props.estado==6) ? '400' : '700'};
         text-decoration: ${ (props) => (props.estado <=2) ? 'line-through' : 'none'};
+        margin-left: 15px;
     }
     ion-icon{
         width: 20px;
         height: 23px;
     }
+    img{
+        width: ${(props) => (props.estado==5) ? '30px' : '23px'};
+        height: ${(props) => (props.estado==5) ? '20px' : '23px'};
+        margin-bottom: ${(props) => (props.estado==5) ? '6px' : ''};
+        margin-left: ${(props) => (props.estado==5) ? '254px' : ''};
+    }
 `;
 
-
-
-const SCFlashTeste = styled.div`
-    width: 300px;
-    height: 131px;
-    background: #FFFFD5;
-    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
-    border-radius: 5px;
-    padding-top: 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    span {
-        font-family: 'Recursive';
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 22px;
-        color: #333333;
-        margin-left: 15px;
-    }
-    img{
-        width: 30px;
-        height: 20px;
-        margin-bottom: 6px;
-        margin-left: 254px;
-    }
-`
 const SCResultado = styled.div`
     display: flex;
     justify-content:center;

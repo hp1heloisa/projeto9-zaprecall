@@ -32,8 +32,8 @@ export default function App() {
     <Geral respondido={respondido} cards={cards.length}>
       <Topo tela={tela} setTela={setTela} />
       <FlashCards cards = {cards} respondido = {respondido} listResultado={listResultado} setResultado={setResultado}
-      setRespondido = {setRespondido} estado={estado} setEstado={setEstado} resultado={resultado} />
-      <Resultado cards = {cards} respondido = {respondido} resultado={resultado} listResultado={listResultado}  />
+      setRespondido = {setRespondido} estado={estado} setEstado={setEstado} resultado={resultado} tela={tela} />
+      <Resultado cards = {cards} respondido = {respondido} resultado={resultado} listResultado={listResultado} tela={tela} />
     </Geral>
   )
 }
