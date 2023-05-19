@@ -21,17 +21,15 @@ export default function Resultado({cards, respondido,resultado,listResultado,tel
             }
         }
     }
-    if (tela){
-        return(
-            <CSResultado respondido={respondido} cards={cards.length} data-test="footer">
-                <div>{formaFrase()}</div>
-                <div>
-                    <span>{respondido}/{cards.length} CONCLUÍDOS</span>
-                    <div>{resultado.map((i)=> <img src={listResultado[i]} alt={listResultado[i]} data-test="no-icon zap-icon partial-icon"/>)}</div>
-                </div>
-            </CSResultado>
+    return(
+        <CSResultado respondido={respondido} cards={cards.length} data-test="footer">
+            <div>{formaFrase()}</div>
+            <div>
+                <span>{respondido}/{cards.length} CONCLUÍDOS</span>
+                <div>{resultado.map((i)=> <img src={listResultado[i]} alt={listResultado[i]} data-test="no-icon zap-icon partial-icon"/>)}</div>
+            </div>
+        </CSResultado>
         )
-    }
 }
 
 const CSResultado = styled.div`
@@ -70,6 +68,9 @@ const CSResultado = styled.div`
             display: flex;
             flex-direction: row;
             gap: 5px;
+            img{
+                width:23px;
+                height:23px;            }
         }
     }
 `;
