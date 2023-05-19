@@ -59,21 +59,18 @@ export default function FlashCards({cards, setEstado, estado, setRespondido,resp
             )
         }
     }
-
-    if (tela){
-        return(
-            <SCEnvolveCard>
-                {cards.map((elemento,i)=>{ 
-                        return (
-                            <SCFlashCard estado={estado[i]} data-test="flashcard">
-                                <CriaFlash i={i} question={elemento.question} answer={elemento.answer}/>
-                            </SCFlashCard>
-                            )
+    return(
+        <SCEnvolveCard>
+            {cards.map((elemento,i)=>{ 
+                    return (
+                        <SCFlashCard estado={estado[i]} data-test="flashcard">
+                            <CriaFlash i={i} question={elemento.question} answer={elemento.answer}/>
+                        </SCFlashCard>
+                        )
             
-                })}
-            </SCEnvolveCard>
-        )
-    }
+            })}
+        </SCEnvolveCard>
+    )
 }
 
 const SCEnvolveCard = styled.div`
