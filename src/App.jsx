@@ -12,7 +12,6 @@ import erro from './assets/icone_erro.png';
 export default function App() {
 
   const listResultado = [erro,quase,certo];
-
   const cards = [
     { title: 'Pergunta 1', question: "O que é JSX?", answer: "Uma extensão da linguagem JavaScript" },
     { title: 'Pergunta 2', question: "O React é __", answer: "Uma biblioteca JavaScript para construção de interfaces" },
@@ -39,6 +38,7 @@ export default function App() {
 }
 
 const Geral = styled.div`
+  box-sizing: border-box;
   padding-top: 42px;
   background-color: #FB6B6B;
   padding-bottom: ${(props) => (props.respondido==props.cards) ? '217px' : '116px'};

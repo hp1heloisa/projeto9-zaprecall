@@ -16,7 +16,7 @@ export default function Topo({tela,setTela}) {
         )
     } else{
         return(
-            <SCTelaInicio data-test="start-btn">
+            <SCTelaInicio>
                 <img src={raio} alt='raio' />
                 <div>ZapRecall</div>
                 <div onClick={comecar}>Iniciar Recall!</div>
@@ -38,6 +38,7 @@ const SCTopo = styled.div`
     line-height: 45px;
     letter-spacing: -0.012em;
     color: #FFFFFF;
+    width: 100%;
     img {
         width: 52px;
         height: 60px;
@@ -46,6 +47,8 @@ const SCTopo = styled.div`
 
 const SCTelaInicio = styled.div`
     position: absolute;
+    left: 0;
+    bottom: 0;
     z-index: 100;
     width: 100%;
     height: 100%;

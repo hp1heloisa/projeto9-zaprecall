@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import virar from '../assets/seta_virar.png';
+import styled from "styled-components";
 
 
 export default function FlashCards({cards, setEstado, estado, setRespondido,respondido,listResultado,setResultado,resultado,tela}) {
@@ -59,18 +59,21 @@ export default function FlashCards({cards, setEstado, estado, setRespondido,resp
             )
         }
     }
-    return(
-        <SCEnvolveCard>
-            {cards.map((elemento,i)=>{ 
-                    return (
-                        <SCFlashCard estado={estado[i]} data-test="flashcard">
-                            <CriaFlash i={i} question={elemento.question} answer={elemento.answer}/>
-                        </SCFlashCard>
-                        )
-            
-            })}
-        </SCEnvolveCard>
-    )
+
+    if (tela) {
+        return(
+            <SCEnvolveCard>
+                {cards.map((elemento,i)=>{ 
+                        return (
+                            <SCFlashCard estado={estado[i]} data-test="flashcard" key={i}>
+                                <CriaFlash i={i} question={elemento.question} answer={elemento.answer}/>
+                            </SCFlashCard>
+                            )
+                
+                })}
+            </SCEnvolveCard>
+        )
+    }
 }
 
 const SCEnvolveCard = styled.div`

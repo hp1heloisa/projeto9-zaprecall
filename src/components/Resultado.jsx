@@ -7,7 +7,6 @@ export default function Resultado({cards, respondido,resultado,listResultado,tel
 
     function formaFrase(){
         if (respondido==cards.length){
-            console.log(resultado)
             if (resultado.includes(0)==false){
                 return <div data-test="finish-text"> 
                             <span><img src={boa} alt={boa} /> Parabéns!</span>
@@ -16,26 +15,30 @@ export default function Resultado({cards, respondido,resultado,listResultado,tel
             } else {
                 return <div data-test="finish-text"> 
                             <span><img src={ruim} alt={ruim} /> Putz...</span>
-                            <span>Você não esqueceu de nenhum flashcard!</span>
+                            <span>Ainda faltam alguns... Mas não desanime!</span>
                         </div>
             }
         }
     }
-    return(
-        <CSResultado respondido={respondido} cards={cards.length} data-test="footer">
-            <div>{formaFrase()}</div>
-            <div>
-                <span>{respondido}/{cards.length} CONCLUÍDOS</span>
-                <div>{resultado.map((i)=> <img src={listResultado[i]} alt={listResultado[i]} data-test="no-icon zap-icon partial-icon"/>)}</div>
-            </div>
-        </CSResultado>
-        )
+
+    if (tela) {
+        return(
+            <CSResultado respondido={respondido} cards={cards.length} data-test="footer">
+                <div>{formaFrase()}</div>
+                <div>
+                    <span>{respondido}/{cards.length} CONCLUÍDOS</span>
+                    <div>{resultado.map((i)=> <img src={listResultado[i]} alt={listResultado[i]} data-test="no-icon zap-icon partial-icon" key={i}/>)}</div>
+                </div>
+            </CSResultado>
+            )
+    }
 }
 
 const CSResultado = styled.div`
     font-family: 'Recursive';
     font-weight: 400;
     font-size: 18px;
+    text-align: center;
     line-height: 22px;
     color: #333333;
     height: ${(props) => (props.respondido==props.cards) ? '171px' : '70px'};
