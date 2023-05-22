@@ -65,8 +65,8 @@ export default function FlashCards({cards, setEstado, estado, setRespondido,resp
             <SCEnvolveCard>
                 {cards.map((elemento,i)=>{ 
                         return (
-                            <SCFlashCard estado={estado[i]} data-test="flashcard" key={i}>
-                                <CriaFlash i={i} question={elemento.question} answer={elemento.answer}/>
+                            <SCFlashCard estado={estado[i]} key={i}>
+                                <CriaFlash i={i} question={elemento.question} answer={elemento.answer} data-test="flashcard" />
                             </SCFlashCard>
                             )
                 

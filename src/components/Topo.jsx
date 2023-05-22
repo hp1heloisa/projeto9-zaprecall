@@ -19,7 +19,7 @@ export default function Topo({tela,setTela}) {
             <SCTelaInicio>
                 <img src={raio} alt='raio' />
                 <div>ZapRecall</div>
-                <div onClick={comecar}>Iniciar Recall!</div>
+                <div onClick={comecar} data-test="start-btn">Iniciar Recall!</div>
             </SCTelaInicio>
         )
 
